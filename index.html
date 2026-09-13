@@ -159,7 +159,7 @@ tr:last-child td{border-bottom:none}
 </style>
 </head>
 <body data-style="soft">
-<div class="demo-banner" id="demoBanner">DEMO — this is example data for trying the app. It is not saved permanently and can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own permanent, private copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">✕</button></div>
+<div class="demo-banner" id="demoBanner">DEMO — example data, log up to 50 transactions and see whether it thinks the way you do. Nothing is saved permanently and it can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own unlimited, permanent copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">✕</button></div>
 <div class="top"><div class="topin">
   <div class="brand"><span class="mark"></span> Money Dashboard</div>
   <div class="tabs" id="tabs"></div>
@@ -626,6 +626,14 @@ if(typeof module !== "undefined" && module.exports){
    APP LAYER — storage, sample data, views, events.
    ===================================================================== */
 var DB = null, state = { view:"dash", ym:ymNow(), strategy:"avalanche", txnFilter:"", editTxn:null };
+/* ---- demo-only limit: this block exists only in the public try-it demo, never in the sold product ---- */
+var DEMO_MODE = true, DEMO_TXN_LIMIT = 50;
+function demoLimitReached(){
+  if(!DEMO_MODE) return false;
+  if(!DB || !DB.txns || DB.txns.length < DEMO_TXN_LIMIT) return false;
+  alert("You've reached the "+DEMO_TXN_LIMIT+"-transaction demo limit.\n\nThis is just a preview — buy the full version for unlimited transactions, all features unlocked, and your own permanent copy.");
+  return true;
+}
 
 function defaultDB(){
   var db = {
@@ -1809,6 +1817,7 @@ function bind(){
   });
   click("addSplitRow", function(){ splitRows.push({ catId:(DB.categories[0]||{}).id||"", amount:0 }); paintSplits(); });
   click("addTxn", function(){
+    if(demoLimitReached()) return;
     var desc = (byId("tDesc")||{}).value || "";
     var amt = toCents((byId("tAmt")||{}).value);
     var useSplits = splitRows.length && splitRows.some(function(r){ return r.amount > 0; }) && !byId("splitBox").classList.contains("hide");
@@ -1849,9 +1858,14 @@ function bind(){
     b.addEventListener("click", function(){ f.click(); });
     f.addEventListener("change", function(){
       var file = f.files && f.files[0]; if(!file) return;
+      if(demoLimitReached()) return;
       var r = new FileReader();
       r.onload = function(){
         var res = csvToTxns(String(r.result), DB.categories, DB.txns);
+        if(DEMO_MODE && res.txns.length){
+          var room = Math.max(0, DEMO_TXN_LIMIT - DB.txns.length);
+          if(res.txns.length > room) res.txns = res.txns.slice(0, room);
+        }
         if(res.txns.length){ DB.txns = DB.txns.concat(res.txns); save(); }
         render();
         alert(res.txns.length + " transaction(s) imported" + (res.skipped ? ", " + res.skipped + " row(s) skipped (duplicates or unreadable)" : "") + (res.mapped === "invoice" ? "\n\nRecognised as an invoice export — imported as income." : ""));
