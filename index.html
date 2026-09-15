@@ -159,7 +159,7 @@ tr:last-child td{border-bottom:none}
 </style>
 </head>
 <body data-style="soft">
-<div class="demo-banner" id="demoBanner">DEMO — example data, log up to 50 transactions and see whether it thinks the way you do. Nothing is saved permanently and it can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own unlimited, permanent copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">✕</button></div>
+<div class="demo-banner" id="demoBanner">DEMO — example data, add up to 15 of your own transactions and see whether it thinks the way you do. Nothing is saved permanently and it can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own unlimited, permanent copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">✕</button></div>
 <div class="top"><div class="topin">
   <div class="brand"><span class="mark"></span> Money Dashboard</div>
   <div class="tabs" id="tabs"></div>
@@ -627,7 +627,7 @@ if(typeof module !== "undefined" && module.exports){
    ===================================================================== */
 var DB = null, state = { view:"dash", ym:ymNow(), strategy:"avalanche", txnFilter:"", editTxn:null };
 /* ---- demo-only limit: this block exists only in the public try-it demo, never in the sold product ---- */
-var DEMO_MODE = true, DEMO_TXN_LIMIT = 50;
+var DEMO_MODE = true, DEMO_TXN_LIMIT = 30; /* 15 seeded + 15 room to try adding your own */
 function demoLimitReached(){
   if(!DEMO_MODE) return false;
   if(!DB || !DB.txns || DB.txns.length < DEMO_TXN_LIMIT) return false;
