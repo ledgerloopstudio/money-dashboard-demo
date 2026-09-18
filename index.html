@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Money Dashboard — LedgerLoopStudio</title>
+<title>Money Dashboard â LedgerLoopStudio</title>
 <style>
 :root{
   --accent:#0F7B6C;--accent-d:#0B5F54;--accent-l:#E6F2F0;
@@ -156,10 +156,11 @@ tr:last-child td{border-bottom:none}
 .hbar{display:flex;height:26px;border-radius:8px;overflow:hidden;border:1px solid var(--rule)}
 .hbar>i{display:block;height:100%}
 @media print{.top,.iconbtn,.btn,.pop,.tabs{display:none!important}body{background:#fff}.card{break-inside:avoid;box-shadow:none;border-color:#ccc}.wrap{max-width:none;padding:0}}
+.buildstamp{max-width:1180px;margin:0 auto;padding:4px 22px 30px;color:#8A9AA5;font-size:11px;letter-spacing:.04em;text-align:right}
 </style>
 </head>
 <body data-style="soft">
-<div class="demo-banner" id="demoBanner">DEMO — example data, add up to 15 of your own transactions and see whether it thinks the way you do. Nothing is saved permanently and it can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own unlimited, permanent copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">✕</button></div>
+<div class="demo-banner" id="demoBanner">DEMO â example data, add up to 15 of your own transactions and see whether it thinks the way you do. Nothing is saved permanently and it can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own unlimited, permanent copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">â</button></div>
 <div class="top"><div class="topin">
   <div class="brand"><span class="mark"></span> Money Dashboard</div>
   <div class="tabs" id="tabs"></div>
@@ -187,7 +188,7 @@ tr:last-child td{border-bottom:none}
 
 <script>
 /* =====================================================================
-   MONEY DASHBOARD — single file, localStorage, zero network calls.
+   MONEY DASHBOARD â single file, localStorage, zero network calls.
    All money is stored and computed in WHOLE CENTS (integers) so that
    float multiplication can never lose a cent before rounding.
    ===================================================================== */
@@ -217,7 +218,7 @@ function toCents(v){
 }
 function fromCents(c){ return (Math.round(c)/100).toFixed(2); }
 function money(c, cur){
-  /* The pure layer must never assume app state exists — guard the DB lookup so
+  /* The pure layer must never assume app state exists â guard the DB lookup so
      money() cannot throw when it is called before boot, or from a test harness. */
   if(cur === undefined){
     cur = (typeof DB !== "undefined" && DB && DB.settings && DB.settings.currency) ? DB.settings.currency : "$";
@@ -255,7 +256,7 @@ function ymLabel(ym){
   return (M[+p[1]-1]||"") + " " + p[0];
 }
 function fmtDate(iso){
-  var d = parseISO(iso); if(!d) return "—";
+  var d = parseISO(iso); if(!d) return "â";
   var M = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   return d.getDate()+" "+M[d.getMonth()]+" "+d.getFullYear();
 }
@@ -497,22 +498,22 @@ function healthScore(inp){
   var parts = [];
   /* 1. savings rate */
   var sr = inp.income > 0 ? Math.round((inp.income - inp.expense) * 100 / inp.income) : null;
-  parts.push({ label:"Savings rate", value: sr===null?"—":sr+"%",
+  parts.push({ label:"Savings rate", value: sr===null?"â":sr+"%",
     points: sr===null?0: sr>=20?20 : sr>=10?14 : sr>=1?8 : 0,
-    note: sr===null?"add income and expenses":(sr>=20?"20%+ is strong":sr>=10?"10–19% is solid":sr>=1?"under 10%":"spending more than you earn") });
+    note: sr===null?"add income and expenses":(sr>=20?"20%+ is strong":sr>=10?"10â19% is solid":sr>=1?"under 10%":"spending more than you earn") });
   /* 2. emergency cover */
   var m = inp.efMonths;
-  parts.push({ label:"Emergency fund", value: m===null?"—":m+" mo",
+  parts.push({ label:"Emergency fund", value: m===null?"â":m+" mo",
     points: m===null?0: m>=6?20 : m>=3?14 : m>=1?8 : 0,
     note: m===null?"set your essentials":(m>=6?"six months or more":m>=3?"three months+":m>=1?"under three months":"nothing set aside") });
   /* 3. budget adherence */
   var adh = inp.planned > 0 ? Math.round(inp.actual*100/inp.planned) : null;
-  parts.push({ label:"Budget adherence", value: adh===null?"—":adh+"%",
+  parts.push({ label:"Budget adherence", value: adh===null?"â":adh+"%",
     points: adh===null?0: adh<=100?20 : adh<=110?12 : adh<=130?6 : 0,
     note: adh===null?"set category budgets":(adh<=100?"inside budget":adh<=110?"just over":"well over budget") });
   /* 4. debt load vs income */
   var dl = inp.income > 0 ? Math.round(inp.debtPayments*100/inp.income) : null;
-  parts.push({ label:"Debt payments", value: dl===null?"—":dl+"% of income",
+  parts.push({ label:"Debt payments", value: dl===null?"â":dl+"% of income",
     points: dl===null?20: dl===0?20 : dl<=15?16 : dl<=30?10 : dl<=40?5 : 0,
     note: dl===null?"no income recorded":(dl===0?"debt free":dl<=15?"comfortable":dl<=30?"manageable":"heavy") });
   /* 5. net worth direction */
@@ -623,7 +624,7 @@ if(typeof module !== "undefined" && module.exports){
 
 <script>
 /* =====================================================================
-   APP LAYER — storage, sample data, views, events.
+   APP LAYER â storage, sample data, views, events.
    ===================================================================== */
 var DB = null, state = { view:"dash", ym:ymNow(), strategy:"avalanche", txnFilter:"", editTxn:null };
 /* ---- demo-only limit: this block exists only in the public try-it demo, never in the sold product ---- */
@@ -631,7 +632,7 @@ var DEMO_MODE = true, DEMO_TXN_LIMIT = 30; /* 15 seeded + 15 room to try adding 
 function demoLimitReached(){
   if(!DEMO_MODE) return false;
   if(!DB || !DB.txns || DB.txns.length < DEMO_TXN_LIMIT) return false;
-  alert("You've reached the "+DEMO_TXN_LIMIT+"-transaction demo limit.\n\nThis is just a preview — buy the full version for unlimited transactions, all features unlocked, and your own permanent copy.");
+  alert("You've reached the "+DEMO_TXN_LIMIT+"-transaction demo limit.\n\nThis is just a preview â buy the full version for unlimited transactions, all features unlocked, and your own permanent copy.");
   return true;
 }
 
@@ -760,7 +761,7 @@ function load(){
   if(DB.extra === undefined) DB.extra = 0;
   /* One-time migration to the current default template. Anyone who opened an earlier build
      already has a style written into their localStorage, so a new default would never reach
-     them — the version-stamped flag moves them across exactly once, then respects their choice.
+     them â the version-stamped flag moves them across exactly once, then respects their choice.
      (Same trap that made the Kanban restyle invisible until it was fixed.) */
   var OLD_STYLES = { soft:1, plain:1, sharp:1 };
   if(DB.settings.styleSeeded !== 2){
@@ -785,7 +786,7 @@ function applyLook(){
   document.documentElement.style.setProperty("--accent-d", shade(s.accent,-18));
   document.documentElement.style.setProperty("--accent-l", s.theme==="dark" ? shade(s.accent,-62) : tint(s.accent,88));
   document.body.setAttribute("data-style", s.style||"vivid");
-  /* the Ledger template is a dark look by definition — it ignores the light/dark toggle */
+  /* the Ledger template is a dark look by definition â it ignores the light/dark toggle */
   document.documentElement.setAttribute("data-theme", (s.theme==="dark" || s.style==="ledger") ? "dark":"light");
   var tb = document.getElementById("themeBtn"); if(tb) tb.textContent = s.theme==="dark" ? "Light":"Dark";
 }
@@ -837,7 +838,7 @@ function kpi(k,v,n,tone,delta){
   var col = tone==="ok"?"var(--ok)":tone==="warn"?"var(--warn)":tone==="bad"?"var(--bad)":"var(--ink)";
   var d = "";
   if(delta !== undefined && delta !== null){
-    d = '<span class="delta '+(delta>=0?"pos":"neg")+'"> '+(delta>=0?"▲":"▼")+' '+Math.abs(delta)+'%</span>';
+    d = '<span class="delta '+(delta>=0?"pos":"neg")+'"> '+(delta>=0?"â²":"â¼")+' '+Math.abs(delta)+'%</span>';
   }
   return '<div class="kpi"><div class="k">'+esc(k)+'</div><div class="v" style="color:'+col+'">'+v+d+'</div><div class="n">'+esc(n||"")+'</div></div>';
 }
@@ -920,7 +921,7 @@ function barPct(actual, planned){
 /* ---------------- dashboard ---------------- */
 function vDash(){
   var S = snapshot(), h = "";
-  /* how far through the month we are — only meaningful for the current month */
+  /* how far through the month we are â only meaningful for the current month */
   var isNow = state.ym === ymNow();
   var dim = daysInMonth(state.ym);
   var dayNo = isNow ? parseInt(todayISO().slice(8,10),10) : dim;
@@ -941,19 +942,19 @@ function vDash(){
          : 'What is left after everything you have already promised to someone else.')+'</div>'
      + '<div class="chips">'
      + '<span class="chip">Available <b>'+money(S.sts.liquid)+'</b></span>'
-     + '<span class="chip">− Bills <b>'+money(S.sts.billsDue)+'</b></span>'
-     + '<span class="chip">− Recurring <b>'+money(S.sts.recurringLeft)+'</b></span>'
-     + '<span class="chip">− Goals <b>'+money(S.sts.goalsMonthly)+'</b></span>'
-     + '<span class="chip">− Buffer <b>'+money(S.sts.buffer)+'</b></span>'
+     + '<span class="chip">â Bills <b>'+money(S.sts.billsDue)+'</b></span>'
+     + '<span class="chip">â Recurring <b>'+money(S.sts.recurringLeft)+'</b></span>'
+     + '<span class="chip">â Goals <b>'+money(S.sts.goalsMonthly)+'</b></span>'
+     + '<span class="chip">â Buffer <b>'+money(S.sts.buffer)+'</b></span>'
      + '</div></div>';
   h += '<div class="grid g2" style="gap:14px">'
      + kpi("Income this month", money(S.inc), pInc>0?"last month "+money(pInc):"recorded", null, dInc)
      + kpi("Spent this month", money(S.exp), S.inc>0 ? Math.round(S.exp*100/S.inc)+"% of income" : "", null, dExp)
      + kpi("Left in budget", money(S.bs.totals.left), money(S.bs.totals.actual)+" of "+money(S.bs.totals.planned)+" used", S.bs.totals.left<0?"bad":"ok")
-     + kpi("Net worth", money(S.nw.net), money(S.nw.assets)+" assets − "+money(S.nw.liabilities)+" debts", S.nw.net<0?"bad":null)
+     + kpi("Net worth", money(S.nw.net), money(S.nw.assets)+" assets â "+money(S.nw.liabilities)+" debts", S.nw.net<0?"bad":null)
      + '</div></div>';
 
-  /* Pace check — deliberately measured on DISCRETIONARY spending only.
+  /* Pace check â deliberately measured on DISCRETIONARY spending only.
      A straight line through the whole budget is useless here: rent, insurance and other
      fixed costs leave on day one, so total spending always looks catastrophically "ahead
      of pace" in the first week and then flattens. Day-to-day spending is the part that
@@ -967,11 +968,11 @@ function vDash(){
     var projected = Math.round(wActual * 100 / Math.max(1, monthPct));
     h += '<div class="card" style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">'
        + '<div style="flex:1;min-width:230px"><h2>Day-to-day spending pace</h2>'
-       + '<div class="sub">Your Wants budget only — fixed costs like rent leave on day one, so pacing the whole budget would tell you nothing.</div></div>'
+       + '<div class="sub">Your Wants budget only â fixed costs like rent leave on day one, so pacing the whole budget would tell you nothing.</div></div>'
        + '<div style="flex:2;min-width:250px"><div class="bar" style="height:14px"><i class="'
        + (ahead < 0 ? "over" : "") + '" style="width:'+barPct(wActual, wPlanned)+'%"></i></div>'
        + '<div class="mini" style="margin-top:6px">'
-       + monthPct+'% through '+ymLabel(state.ym)+' · '+money(wActual)+' of '+money(wPlanned)+' used · '
+       + monthPct+'% through '+ymLabel(state.ym)+' Â· '+money(wActual)+' of '+money(wPlanned)+' used Â· '
        + (ahead >= 0
           ? '<b class="pos">'+money(ahead)+' ahead of pace</b>'
           : '<b class="neg">'+money(-ahead)+' behind pace</b>, heading for about '+money(projected))
@@ -979,7 +980,7 @@ function vDash(){
   }
 
   h += '<div class="grid g2">';
-  /* where the money goes — donut */
+  /* where the money goes â donut */
   var spendRows = S.bs.rows.filter(function(r){ return r.actual > 0; }).sort(function(a,b){ return b.actual-a.actual; });
   h += '<div class="card"><h2>Where the money goes</h2><div class="sub">'+ymLabel(state.ym)+', by category.</div>';
   if(!spendRows.length) h += '<div class="empty">No spending recorded yet this month.</div>';
@@ -1008,7 +1009,7 @@ function vDash(){
     var gp = rows.reduce(function(a,r){ a.p+=r.planned; a.a+=r.actual; return a; },{p:0,a:0});
     var over = gp.a > gp.p;
     h += '<div class="gcard"><div class="gh"><span class="gt" style="color:'+(over?"var(--bad)":"var(--accent)")+'">'+GROUPS[g]+'</span>'
-       + '<span class="num mini">'+money(gp.a)+' of '+money(gp.p)+(over?' · <b class="neg">over</b>':'')+'</span></div>'
+       + '<span class="num mini">'+money(gp.a)+' of '+money(gp.p)+(over?' Â· <b class="neg">over</b>':'')+'</span></div>'
        + '<div class="bar"><i class="'+(over?"over":gp.a>gp.p*0.9?"near":"")+'" style="width:'+barPct(gp.a,gp.p)+'%"></i></div>';
     /* top three inside the group */
     rows.slice().sort(function(a,b){ return b.actual-a.actual; }).slice(0,3).forEach(function(r){
@@ -1050,7 +1051,7 @@ function vDash(){
 
   /* health + cashflow */
   h += '<div class="grid g2">';
-  h += '<div class="card"><h2>Financial health score</h2><div class="sub">Five parts, twenty points each. Every number here comes from what you entered — nothing is guessed.</div>';
+  h += '<div class="card"><h2>Financial health score</h2><div class="sub">Five parts, twenty points each. Every number here comes from what you entered â nothing is guessed.</div>';
   h += '<div style="display:flex;align-items:center;gap:16px;margin-bottom:12px"><div style="font-size:44px;font-weight:800;letter-spacing:-.03em">'+S.hs.score+'<span style="font-size:18px;color:var(--grey)">/100</span></div>'
      + '<div><span class="tag '+(S.hs.score>=80?"ok":S.hs.score>=60?"acc":S.hs.score>=40?"warn":"bad")+'">'+S.hs.band+'</span></div></div>';
   h += '<div class="tw"><table><tbody>';
@@ -1079,7 +1080,7 @@ function vDash(){
      + (S.inc>0 ? ' ('+Math.round(saved*100/S.inc)+'% savings rate).' : '.')+'</div>';
   h += '</div></div>';
 
-  /* what needs attention — turns the whole dashboard into a next-action list */
+  /* what needs attention â turns the whole dashboard into a next-action list */
   var todo = [];
   if(S.bd.overdueCount) todo.push({ t:S.bd.overdueCount+' overdue bill'+(S.bd.overdueCount>1?'s':'')+' worth '+money(S.bd.overdue), v:"bills", tone:"bad" });
   if(S.sts.amount < 0) todo.push({ t:'Safe-to-spend is negative by '+money(-S.sts.amount), v:"budget", tone:"bad" });
@@ -1135,7 +1136,7 @@ function vBudget(){
           + '<td class="num '+(r.left<0?"neg":"")+'">'+money(r.left)+'</td>'
           + '<td><div class="bar"><i class="'+(r.over?"over":r.actual>r.planned*0.9&&r.planned>0?"near":"")+'" style="width:'+barPct(r.actual,r.planned)+'%"></i></div>'
           + '<span class="mini">'+(r.planned>0?r.pct+"%":"no plan")+'</span></td>'
-          + '<td><button class="btn sm danger" data-delcat="'+r.id+'">×</button></td></tr>';
+          + '<td><button class="btn sm danger" data-delcat="'+r.id+'">Ã</button></td></tr>';
       });
       h += '</tbody></table></div>';
     }
@@ -1164,13 +1165,13 @@ function vTxns(){
   var copts = DB.categories.map(function(c){ return '<option value="'+c.id+'">'+esc(c.name)+'</option>'; }).join("");
   var aopts = DB.accounts.map(function(a){ return '<option value="'+a.id+'">'+esc(a.name)+'</option>'; }).join("");
 
-  h += '<div class="card"><h2>Add a transaction</h2><div class="sub">One purchase can be split across several categories — useful for a big-box shop.</div>';
+  h += '<div class="card"><h2>Add a transaction</h2><div class="sub">One purchase can be split across several categories â useful for a big-box shop.</div>';
   h += '<div class="row"><div style="flex:0 0 150px"><label>Date</label><input type="date" id="tDate" value="'+todayISO()+'"></div>'
      + '<div style="flex:2"><label>Description</label><input id="tDesc" placeholder="e.g. Weekly shop"></div>'
      + '<div style="flex:0 0 130px"><label>Type</label><select id="tType"><option value="expense">Expense</option><option value="income">Income</option></select></div>'
      + '<div style="flex:0 0 150px"><label>Amount</label><input id="tAmt" placeholder="0.00"></div>'
-     + '<div><label>Category</label><select id="tCat"><option value="">— none —</option>'+copts+'</select></div>'
-     + '<div><label>Account</label><select id="tAcct"><option value="">— none —</option>'+aopts+'</select></div>'
+     + '<div><label>Category</label><select id="tCat"><option value="">â none â</option>'+copts+'</select></div>'
+     + '<div><label>Account</label><select id="tAcct"><option value="">â none â</option>'+aopts+'</select></div>'
      + '<div style="flex:0 0 auto"><label>&nbsp;</label><button class="btn" id="addTxn">Add</button></div></div>';
   h += '<div style="margin-top:10px"><button class="btn sm ghost" id="splitToggle">Split across categories</button></div>';
   h += '<div id="splitBox" class="hide" style="margin-top:10px;border:1px solid var(--rule);border-radius:10px;padding:10px">'
@@ -1178,7 +1179,7 @@ function vTxns(){
      + '<span class="mini" id="splitTotal"></span></div>';
   h += '</div>';
 
-  h += '<div class="card"><h2>'+ymLabel(ym)+' — '+rows.length+' transactions</h2>'
+  h += '<div class="card"><h2>'+ymLabel(ym)+' â '+rows.length+' transactions</h2>'
      + '<div class="row" style="margin-bottom:10px"><div><label>Search</label><input id="txnSearch" value="'+esc(state.txnFilter)+'" placeholder="description or category"></div>'
      + '<div style="flex:0 0 auto"><label>&nbsp;</label><button class="btn sm ghost" id="expCsv">Export CSV</button></div>'
      + '<div style="flex:0 0 auto"><label>&nbsp;</label><button class="btn sm ghost" id="impCsvBtn">Import CSV</button><input type="file" id="impCsv" accept=".csv,text/csv" class="hide"></div></div>';
@@ -1187,19 +1188,19 @@ function vTxns(){
     h += '<div class="tw"><table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Account</th><th class="num">Amount</th><th></th></tr></thead><tbody>';
     rows.forEach(function(t){
       var isSplit = t.splits && t.splits.length;
-      var catName = isSplit ? t.splits.length+" categories" : (t.catId ? (catById(t.catId)||{}).name : "—");
+      var catName = isSplit ? t.splits.length+" categories" : (t.catId ? (catById(t.catId)||{}).name : "â");
       h += '<tr><td class="mini">'+fmtDate(t.date)+'</td><td>'+esc(t.desc)
         + (isSplit? ' <span class="tag">split</span>':'')+'</td>'
-        + '<td class="mini">'+esc(catName||"—")
-        + (isSplit ? '<span class="mini" style="display:block">'+t.splits.map(function(s){ var c=catById(s.catId); return esc((c?c.name:"?"))+" "+money(s.amount); }).join(" · ")+'</span>':'')
+        + '<td class="mini">'+esc(catName||"â")
+        + (isSplit ? '<span class="mini" style="display:block">'+t.splits.map(function(s){ var c=catById(s.catId); return esc((c?c.name:"?"))+" "+money(s.amount); }).join(" Â· ")+'</span>':'')
         + '</td>'
-        + '<td class="mini">'+esc(t.accountId ? ((acctById(t.accountId)||{}).name||"—") : "—")+'</td>'
-        + '<td class="num '+(t.type==="income"?"pos":"")+'">'+(t.type==="income"?"+":"−")+money(txnTotal(t)).replace("-","")+'</td>'
-        + '<td><button class="btn sm danger" data-deltxn="'+t.id+'">×</button></td></tr>';
+        + '<td class="mini">'+esc(t.accountId ? ((acctById(t.accountId)||{}).name||"â") : "â")+'</td>'
+        + '<td class="num '+(t.type==="income"?"pos":"")+'">'+(t.type==="income"?"+":"â")+money(txnTotal(t)).replace("-","")+'</td>'
+        + '<td><button class="btn sm danger" data-deltxn="'+t.id+'">Ã</button></td></tr>';
     });
     var ti = 0, te = 0;
     rows.forEach(function(t){ if(t.type==="income") ti += txnTotal(t); else te += txnTotal(t); });
-    h += '<tr><td colspan="4"><b>Totals shown</b></td><td class="num"><b class="pos">+'+money(ti)+'</b><br><b class="neg">−'+money(te)+'</b></td><td></td></tr>';
+    h += '<tr><td colspan="4"><b>Totals shown</b></td><td class="num"><b class="pos">+'+money(ti)+'</b><br><b class="neg">â'+money(te)+'</b></td><td></td></tr>';
     h += '</tbody></table></div>';
   }
   h += '</div>';
@@ -1229,7 +1230,7 @@ function vBills(){
         + '<td class="mini">'+fmtDate(b.dueDate)+'</td>'
         + '<td class="num">'+money(b.amount)+'</td>'
         + '<td>'+(b.paid?'<span class="tag ok">paid</span>':late?'<span class="tag bad">overdue</span>':(days!==null&&days<=5?'<span class="tag warn">in '+days+' days</span>':'<span class="tag">upcoming</span>'))+'</td>'
-        + '<td><button class="btn sm danger" data-delbill="'+b.id+'">×</button></td></tr>';
+        + '<td><button class="btn sm danger" data-delbill="'+b.id+'">Ã</button></td></tr>';
     });
     h += '</tbody></table></div>';
   }
@@ -1271,7 +1272,7 @@ function vRecurring(){
         + '<td class="num">'+money(monthlyEquivalent(r))+'</td>'
         + '<td class="num">'+money(yearlyEquivalent(r))+'</td>'
         + '<td>'+(r.isSubscription?'<span class="tag warn">yes</span>':'')+'</td>'
-        + '<td><button class="btn sm danger" data-delrec="'+r.id+'">×</button></td></tr>';
+        + '<td><button class="btn sm danger" data-delrec="'+r.id+'">Ã</button></td></tr>';
     });
     h += '</tbody></table></div>';
   }
@@ -1282,7 +1283,7 @@ function vRecurring(){
      + '<div style="flex:0 0 180px"><label>Frequency</label><select id="nrFreq">'+Object.keys(FREQS).map(function(k){ return '<option value="'+k+'">'+FREQS[k]+'</option>'; }).join("")+'</select></div>'
      + '<div style="flex:0 0 110px"><label>Every N wks</label><input id="nrEvery" placeholder="6"></div>'
      + '<div style="flex:0 0 170px"><label>Next date</label><input type="date" id="nrNext" value="'+todayISO()+'"></div>'
-     + '<div><label>Category</label><select id="nrCat"><option value="">— none —</option>'+copts+'</select></div>'
+     + '<div><label>Category</label><select id="nrCat"><option value="">â none â</option>'+copts+'</select></div>'
      + '<div style="flex:0 0 130px"><label>Subscription</label><select id="nrSub"><option value="">No</option><option value="1">Yes</option></select></div>'
      + '<div style="flex:0 0 auto"><label>&nbsp;</label><button class="btn" id="addRec">Add</button></div></div>';
   h += '</div>';
@@ -1331,13 +1332,13 @@ function vPaycheck(){
       h += '<tr><td><input type="checkbox" class="allocchk" data-pc="'+p.id+'" data-i="'+i+'"'+(a.done?" checked":"")+' style="width:18px;height:18px;accent-color:var(--accent)"></td>'
         + '<td><input data-alloc="'+p.id+'" data-i="'+i+'" data-f="label" value="'+esc(a.label)+'"></td>'
         + '<td><input class="num" data-alloc="'+p.id+'" data-i="'+i+'" data-f="amount" value="'+fromCents(a.amount)+'"></td>'
-        + '<td><button class="btn sm danger" data-delalloc="'+p.id+'" data-i="'+i+'">×</button></td></tr>';
+        + '<td><button class="btn sm danger" data-delalloc="'+p.id+'" data-i="'+i+'">Ã</button></td></tr>';
     });
     h += '</tbody></table></div>';
     h += '<div class="row" style="margin-top:10px"><div style="flex:0 0 auto"><button class="btn sm ghost" data-addalloc="'+p.id+'">Add allocation</button></div>'
-      + '<div class="mini" style="align-self:center">Allocated '+money(alloc)+' of '+money(p.amount)+' · '
+      + '<div class="mini" style="align-self:center">Allocated '+money(alloc)+' of '+money(p.amount)+' Â· '
       + (left===0 ? '<b class="pos">fully allocated</b>' : left>0 ? '<b>'+money(left)+' unallocated</b>' : '<b class="neg">'+money(-left)+' over-allocated</b>')
-      + ' · '+money(doneAmt)+' actually moved</div></div>';
+      + ' Â· '+money(doneAmt)+' actually moved</div></div>';
     h += '</div>';
   });
   h += '<div class="row"><div><label>New paycheck label</label><input id="npLabel" placeholder="e.g. Mid-month salary"></div>'
@@ -1355,7 +1356,7 @@ function vGoals(){
   h += '<div class="grid g4" style="margin-bottom:12px">'
      + kpi("In savings accounts", money(S.ef.saved), "across savings-type accounts")
      + kpi("Monthly essentials", money(S.ef.monthly), "set in Settings")
-     + kpi("Cover", S.ef.months===null?"—":S.ef.months+" months", S.ef.months===null?"set your essentials":(S.ef.months>=6?"six months or more":S.ef.months>=3?"three months or more":"under three months"), S.ef.months===null?null:(S.ef.months>=6?"ok":S.ef.months>=3?"warn":"bad"))
+     + kpi("Cover", S.ef.months===null?"â":S.ef.months+" months", S.ef.months===null?"set your essentials":(S.ef.months>=6?"six months or more":S.ef.months>=3?"three months or more":"under three months"), S.ef.months===null?null:(S.ef.months>=6?"ok":S.ef.months>=3?"warn":"bad"))
      + kpi("Three / six month target", money(S.ef.target3)+" / "+money(S.ef.target6), "based on your essentials")
      + '</div>';
   h += '<div class="bar"><i style="width:'+(S.ef.target6>0?Math.min(100,Math.round(S.ef.saved*100/S.ef.target6)):0)+'%"></i></div>';
@@ -1374,7 +1375,7 @@ function vGoals(){
         + '<td><input class="num" data-goal="'+g.id+'" data-f="monthly" value="'+fromCents(g.monthly)+'"></td>'
         + '<td><div class="bar"><i style="width:'+pct+'%"></i></div><span class="mini">'+pct+'%</span></td>'
         + '<td class="mini">'+(eta.done?'<span class="tag ok">reached</span>':eta.months===null?'set a monthly amount':fmtDate(eta.date)+' <span class="mini">('+eta.months+' mo)</span>')+'</td>'
-        + '<td><button class="btn sm danger" data-delgoal="'+g.id+'">×</button></td></tr>';
+        + '<td><button class="btn sm danger" data-delgoal="'+g.id+'">Ã</button></td></tr>';
     });
     var gt = 0, gs = 0, gm = 0;
     DB.goals.forEach(function(g){ gt += (g.target||0); gs += (g.saved||0); gm += (g.monthly||0); });
@@ -1400,11 +1401,11 @@ function vDebt(){
      + kpi("Total debt", money(totalDebt), DB.debts.length+" balances")
      + kpi("Minimum payments", money(totalMin), "per month")
      + kpi("Extra payment", money(DB.extra||0), "on top of minimums")
-     + kpi("Debt free in", plan.stalled?"—":(plan.months===null?"—":plan.months+" months"), plan.stalled?"payments do not cover interest":(plan.payoffDate?"about "+fmtDate(plan.payoffDate):""), plan.stalled?"bad":"ok")
+     + kpi("Debt free in", plan.stalled?"â":(plan.months===null?"â":plan.months+" months"), plan.stalled?"payments do not cover interest":(plan.payoffDate?"about "+fmtDate(plan.payoffDate):""), plan.stalled?"bad":"ok")
      + '</div>';
 
-  h += '<div class="card"><h2>Your debts</h2><div class="sub">Interest is applied monthly at rate ÷ 12, then payments come off. Everything is computed in whole cents.</div>';
-  if(!DB.debts.length) h += '<div class="empty">No debts recorded — enjoy that.</div>';
+  h += '<div class="card"><h2>Your debts</h2><div class="sub">Interest is applied monthly at rate Ã· 12, then payments come off. Everything is computed in whole cents.</div>';
+  if(!DB.debts.length) h += '<div class="empty">No debts recorded â enjoy that.</div>';
   else {
     h += '<div class="tw"><table><thead><tr><th>Debt</th><th>Type</th><th class="num">Balance</th><th class="num">Rate %</th><th class="num">Minimum</th><th class="num">Interest cost</th><th>Paid off</th><th></th></tr></thead><tbody>';
     var per = {}; plan.perDebt.forEach(function(p){ per[p.id] = p; });
@@ -1416,9 +1417,9 @@ function vDebt(){
         + '<td><input class="num" data-debt="'+d.id+'" data-f="balance" value="'+fromCents(d.balance)+'"></td>'
         + '<td><input class="num" data-debt="'+d.id+'" data-f="rate" value="'+esc(d.rate)+'"></td>'
         + '<td><input class="num" data-debt="'+d.id+'" data-f="minPayment" value="'+fromCents(d.minPayment)+'"></td>'
-        + '<td class="num">'+(p.interest!==undefined?money(p.interest):"—")+'</td>'
-        + '<td class="mini">'+(p.months?fmtDate(p.date)+' <span class="mini">('+p.months+' mo)</span>':"—")+'</td>'
-        + '<td><button class="btn sm danger" data-deldebt="'+d.id+'">×</button></td></tr>';
+        + '<td class="num">'+(p.interest!==undefined?money(p.interest):"â")+'</td>'
+        + '<td class="mini">'+(p.months?fmtDate(p.date)+' <span class="mini">('+p.months+' mo)</span>':"â")+'</td>'
+        + '<td><button class="btn sm danger" data-deldebt="'+d.id+'">Ã</button></td></tr>';
     });
     h += '</tbody></table></div>';
     h += '<div class="mini" style="margin-top:8px">The numbered order is the payoff order for the '+(state.strategy==="snowball"?"snowball":"avalanche")+' strategy.</div>';
@@ -1429,16 +1430,16 @@ function vDebt(){
      + '<div style="flex:0 0 150px"><label>Minimum</label><input id="ndMin" placeholder="0.00"></div>'
      + '<div style="flex:0 0 auto"><label>&nbsp;</label><button class="btn" id="addDebt">Add debt</button></div></div></div>';
 
-  h += '<div class="card"><h2>Snowball or avalanche?</h2><div class="sub">Same debts, same extra payment — two orders. Snowball clears the smallest balance first (motivation), avalanche the highest rate first (cheapest).</div>';
+  h += '<div class="card"><h2>Snowball or avalanche?</h2><div class="sub">Same debts, same extra payment â two orders. Snowball clears the smallest balance first (motivation), avalanche the highest rate first (cheapest).</div>';
   h += '<div class="row" style="margin-bottom:12px"><div style="flex:0 0 200px"><label>Extra per month</label><input id="extraPay" value="'+fromCents(DB.extra||0)+'"></div>'
      + '<div style="flex:0 0 260px"><label>Show order for</label><div class="seg"><button class="'+(state.strategy==="avalanche"?"on":"")+'" data-strat="avalanche">Avalanche</button><button class="'+(state.strategy==="snowball"?"on":"")+'" data-strat="snowball">Snowball</button></div></div></div>';
   h += '<div class="tw"><table><thead><tr><th>Strategy</th><th>Order</th><th class="num">Months</th><th class="num">Total interest</th><th>Debt free</th></tr></thead><tbody>';
   [["Avalanche (highest rate first)", cmp.avalanche],["Snowball (smallest balance first)", cmp.snowball]].forEach(function(pair){
     var p = pair[1];
-    var names = p.order.map(function(id){ var d=null; DB.debts.forEach(function(x){ if(x.id===id) d=x; }); return d?d.name:""; }).filter(Boolean).join(" → ");
-    h += '<tr><td><b>'+pair[0]+'</b></td><td class="mini">'+esc(names||"—")+'</td>'
-      + '<td class="num">'+(p.stalled?"—":p.months)+'</td><td class="num">'+money(p.totalInterest)+'</td>'
-      + '<td class="mini">'+(p.stalled?'<span class="tag bad">never at this rate</span>':(p.payoffDate?fmtDate(p.payoffDate):"—"))+'</td></tr>';
+    var names = p.order.map(function(id){ var d=null; DB.debts.forEach(function(x){ if(x.id===id) d=x; }); return d?d.name:""; }).filter(Boolean).join(" â ");
+    h += '<tr><td><b>'+pair[0]+'</b></td><td class="mini">'+esc(names||"â")+'</td>'
+      + '<td class="num">'+(p.stalled?"â":p.months)+'</td><td class="num">'+money(p.totalInterest)+'</td>'
+      + '<td class="mini">'+(p.stalled?'<span class="tag bad">never at this rate</span>':(p.payoffDate?fmtDate(p.payoffDate):"â"))+'</td></tr>';
   });
   h += '</tbody></table></div>';
   if(!cmp.avalanche.stalled && !cmp.snowball.stalled && DB.debts.length > 1){
@@ -1447,7 +1448,7 @@ function vDebt(){
       + (saved > 0 ? 'Avalanche saves you '+money(saved)+' in interest'+(cmp.monthsSaved?' and '+cmp.monthsSaved+' month'+(cmp.monthsSaved===1?'':'s'):'')+'.'
          : saved < 0 ? 'Snowball happens to be cheaper here by '+money(-saved)+'.'
          : 'Both strategies cost the same here.')
-      + '</b><div class="mini" style="margin-top:4px">Snowball still wins for some people — clearing a whole balance early is what keeps them going. The numbers are here so you can choose with your eyes open.</div></div>';
+      + '</b><div class="mini" style="margin-top:4px">Snowball still wins for some people â clearing a whole balance early is what keeps them going. The numbers are here so you can choose with your eyes open.</div></div>';
   }
   if(cmp.avalanche.stalled || cmp.snowball.stalled){
     h += '<div style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(192,57,43,.1)"><b>Your minimum payments are not covering the interest.</b>'
@@ -1471,7 +1472,7 @@ function vWorth(){
     h += '<tr><td><input data-acct="'+a.id+'" data-f="name" value="'+esc(a.name)+'"></td>'
       + '<td><select data-acct="'+a.id+'" data-f="type">'+Object.keys(ACCT_TYPES).map(function(k){ return '<option value="'+k+'"'+(a.type===k?" selected":"")+'>'+ACCT_TYPES[k]+'</option>'; }).join("")+'</select></td>'
       + '<td><input class="num" data-acct="'+a.id+'" data-f="balance" value="'+fromCents(a.balance)+'"></td>'
-      + '<td><button class="btn sm danger" data-delacct="'+a.id+'">×</button></td></tr>';
+      + '<td><button class="btn sm danger" data-delacct="'+a.id+'">Ã</button></td></tr>';
   });
   if(!DB.accounts.length) h += '<tr><td colspan="4" class="empty">No accounts yet.</td></tr>';
   h += '</tbody></table></div>';
@@ -1482,7 +1483,7 @@ function vWorth(){
 
   /* history */
   var snaps = DB.netSnaps.slice().sort(function(a,b){ return String(a.date).localeCompare(String(b.date)); });
-  h += '<div class="card"><h2>Net worth over time</h2><div class="sub">Save a snapshot whenever you update your balances — that is how the line appears.</div>';
+  h += '<div class="card"><h2>Net worth over time</h2><div class="sub">Save a snapshot whenever you update your balances â that is how the line appears.</div>';
   if(snaps.length){
     var maxN = 1;
     snaps.forEach(function(s){ maxN = Math.max(maxN, s.assets); });
@@ -1504,8 +1505,8 @@ function vWorth(){
       h += '<tr><td class="mini">'+fmtDate(s.date)+(s.live?' <span class="tag acc">live</span>':'')+'</td>'
         + '<td class="num">'+money(s.assets)+'</td><td class="num">'+money(s.liabilities)+'</td>'
         + '<td class="num"><b>'+money(net)+'</b></td>'
-        + '<td class="num '+(ch===null?"":ch>=0?"pos":"neg")+'">'+(ch===null?"—":(ch>=0?"+":"")+money(ch))+'</td>'
-        + '<td>'+(s.live?'':'<button class="btn sm danger" data-delsnap="'+s.date+'">×</button>')+'</td></tr>';
+        + '<td class="num '+(ch===null?"":ch>=0?"pos":"neg")+'">'+(ch===null?"â":(ch>=0?"+":"")+money(ch))+'</td>'
+        + '<td>'+(s.live?'':'<button class="btn sm danger" data-delsnap="'+s.date+'">Ã</button>')+'</td></tr>';
     });
     h += '</tbody></table></div>';
   } else h += '<div class="empty">No snapshots yet.</div>';
@@ -1557,11 +1558,11 @@ function vReports(){
     h += '<tr'+(m===ym?' style="background:var(--accent-l)"':'')+'><td>'+ymLabel(m)+(m===ym?' <span class="tag acc">now</span>':'')+'</td>'
       + '<td class="num">'+money(mi)+'</td><td class="num">'+money(me)+'</td>'
       + '<td class="num '+(kept>=0?"pos":"neg")+'">'+money(kept)+'</td>'
-      + '<td class="num">'+(mi>0?Math.round(kept*100/mi)+"%":"—")+'</td></tr>';
+      + '<td class="num">'+(mi>0?Math.round(kept*100/mi)+"%":"â")+'</td></tr>';
   }
   h += '<tr><td><b>Total recorded</b></td><td class="num"><b>'+money(tin)+'</b></td><td class="num"><b>'+money(tex)+'</b></td>'
     + '<td class="num '+((tin-tex)>=0?"pos":"neg")+'"><b>'+money(tin-tex)+'</b></td>'
-    + '<td class="num"><b>'+(tin>0?Math.round((tin-tex)*100/tin)+"%":"—")+'</b></td></tr>';
+    + '<td class="num"><b>'+(tin>0?Math.round((tin-tex)*100/tin)+"%":"â")+'</b></td></tr>';
   h += '</tbody></table></div></div>';
 
   /* recurring + debt summary in the report */
@@ -1579,7 +1580,7 @@ function vReports(){
   h += '<div class="card"><h2>Debt outlook</h2><div class="tw"><table><tbody>'
      + '<tr><td>Total owed</td><td class="num">'+money(S.nw.liabilities)+'</td></tr>'
      + '<tr><td>Extra payment</td><td class="num">'+money(DB.extra||0)+'</td></tr>'
-     + '<tr><td>Debt free (avalanche)</td><td class="num">'+(cmp.avalanche.stalled?"—":cmp.avalanche.months+" months")+'</td></tr>'
+     + '<tr><td>Debt free (avalanche)</td><td class="num">'+(cmp.avalanche.stalled?"â":cmp.avalanche.months+" months")+'</td></tr>'
      + '<tr><td>Interest cost (avalanche)</td><td class="num">'+money(cmp.avalanche.totalInterest)+'</td></tr>'
      + '<tr><td>Interest cost (snowball)</td><td class="num">'+money(cmp.snowball.totalInterest)+'</td></tr>'
      + '</tbody></table></div></div>';
@@ -1595,7 +1596,7 @@ function vSettings(){
      + '<div style="flex:0 0 200px"><label>Safety buffer</label><input id="sBuffer" value="'+fromCents(DB.settings.buffer)+'"></div>'
      + '<div style="flex:0 0 220px"><label>Monthly essentials</label><input id="sEss" value="'+fromCents(DB.settings.essentials)+'"></div>'
      + '<div style="flex:0 0 auto"><label>&nbsp;</label><button class="btn" id="saveSettings">Save</button></div></div>';
-  h += '<div class="mini" style="margin-top:8px">Type any symbol you like — $, £, €, ₨, ₹, ₱, R$, kr. It changes how amounts are displayed; it does not convert between currencies.</div>';
+  h += '<div class="mini" style="margin-top:8px">Type any symbol you like â $, Â£, â¬, â¨, â¹, â±, R$, kr. It changes how amounts are displayed; it does not convert between currencies.</div>';
   h += '</div>';
 
   h += '<div class="card"><h2>Backup and restore</h2><div class="sub">Your data lives in this browser on this device. Export a backup before clearing browser data, switching browsers or moving to another computer.</div>';
@@ -1603,18 +1604,18 @@ function vSettings(){
      + '<button class="btn ghost" id="impJsonBtn">Import backup</button> <input type="file" id="impJson" accept=".json,application/json" class="hide">';
   h += '<div style="margin-top:12px"><button class="btn ghost" id="expCsv2">Export transactions (.csv)</button> '
      + '<button class="btn ghost" id="impCsvBtn2">Import transactions (.csv)</button> <input type="file" id="impCsv2" accept=".csv,text/csv" class="hide"></div>';
-  h += '<div class="mini" style="margin-top:10px">The CSV importer reads a plain <b>Date, Description, Type, Category, Amount</b> file — and it also recognises the invoice export from the Invoice Tracker and Invoice Generator, so freelance income can flow straight into your personal budget. Duplicates are skipped.</div>';
+  h += '<div class="mini" style="margin-top:10px">The CSV importer reads a plain <b>Date, Description, Type, Category, Amount</b> file â and it also recognises the invoice export from the Invoice Tracker and Invoice Generator, so freelance income can flow straight into your personal budget. Duplicates are skipped.</div>';
   h += '<div style="margin-top:14px"><button class="btn danger" id="resetAll">Reset everything</button> <span class="mini">Clears this browser and reloads the sample data.</span></div>';
   h += '</div>';
 
   h += '<div class="card"><h2>What this is, and what it is not</h2>'
      + '<div class="tw"><table><tbody>'
-     + '<tr><td>One HTML file. Double-click it — no ZIP to extract, nothing to install, no account.</td></tr>'
+     + '<tr><td>One HTML file. Double-click it â no ZIP to extract, nothing to install, no account.</td></tr>'
      + '<tr><td>Works offline. There are no network calls in this file at all; nothing you type ever leaves this device.</td></tr>'
      + '<tr><td>It does <b>not</b> connect to your bank. You enter or import your own figures.</td></tr>'
      + '<tr><td>It does <b>not</b> sync between devices. Use Export/Import to move your data.</td></tr>'
      + '<tr><td>It does <b>not</b> convert currencies at live rates, and it is <b>not</b> financial advice.</td></tr>'
-     + '<tr><td>Clearing your browser data will erase it — that is what the backup button is for.</td></tr>'
+     + '<tr><td>Clearing your browser data will erase it â that is what the backup button is for.</td></tr>'
      + '</tbody></table></div></div>';
   return h;
 }
@@ -1790,7 +1791,7 @@ function bind(){
     box.innerHTML = splitRows.map(function(r,i){
       return '<div class="split"><select data-sp="'+i+'" data-f="catId">'+copts+'</select>'
         + '<input data-sp="'+i+'" data-f="amount" placeholder="0.00" value="'+(r.amount?fromCents(r.amount):"")+'" style="max-width:140px">'
-        + '<button class="btn sm danger" data-delsp="'+i+'">×</button></div>';
+        + '<button class="btn sm danger" data-delsp="'+i+'">Ã</button></div>';
     }).join("");
     box.querySelectorAll("[data-sp]").forEach(function(el){
       var i = +el.getAttribute("data-sp"), f = el.getAttribute("data-f");
@@ -1868,7 +1869,7 @@ function bind(){
         }
         if(res.txns.length){ DB.txns = DB.txns.concat(res.txns); save(); }
         render();
-        alert(res.txns.length + " transaction(s) imported" + (res.skipped ? ", " + res.skipped + " row(s) skipped (duplicates or unreadable)" : "") + (res.mapped === "invoice" ? "\n\nRecognised as an invoice export — imported as income." : ""));
+        alert(res.txns.length + " transaction(s) imported" + (res.skipped ? ", " + res.skipped + " row(s) skipped (duplicates or unreadable)" : "") + (res.mapped === "invoice" ? "\n\nRecognised as an invoice export â imported as income." : ""));
       };
       r.readAsText(file);
     });
@@ -1965,5 +1966,6 @@ document.addEventListener("click", function(e){
 load();
 render();
 </script>
+<div class="buildstamp noprint">Money Dashboard &middot; build 2026-09-18 &middot; LedgerLoopStudio</div>
 </body>
 </html>
